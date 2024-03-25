@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SH's KDT8-M2</title>
+  <link rel="icon" href="./img/default.png">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.2/reset.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="./main.css">
+  <script defer src="./src/main.js"></script>
+  <script defer src="./src/addpage.js"></script>
+  <!-- <script defer src="./src/editpage.js"></script> -->
+  <script defer src="./src/crud.js"></script>
+  
+</head>
+<body>
+  <div class="loader-container">
+    <div class="loader"></div>
+  </div>
+  <header>
+    <div class="search-section">
+      <input type="text" placeholder="이름을 검색하세요" class="search-bar">
+      <div class="btn search-btn">
+        SEARCH
+      </div>
+    </div>
+    <div class = "btn add-character">
+      <span>Add New Character</span>
+    </div>
+  </header>
+
+  <main>
+    <section class="profile-list">
+      <div class="profile-info-bar">
+        <span>PHOTO</span>
+        <span>NAME</span>
+        <span>H.P</span>
+        <span>E-MAIL</span>
+        <span>DELETE</span>
+      </div>
+      <!-- 리스트뷰 -->
+      <div class="profile-container">
+        
+      </div>
+    </section>
+    
+    <!-- add -->
+    <section class="add-profile">
+      <div class="btn exit">x</div>
+      <div class="edit-photo">
+        <div class="photo-view"></div>
+        <input type="file" class="photo-upload" accept="image/*">
+      </div>
+      <div class="input-section">
+        <span>Name</span><br>
+        <input type="text" placeholder="이름을 입력하세요" class="name"><br>
+      </div>
+      <div class="input-section">
+        <span>Phone</span><br>
+        <input type="text" placeholder="휴대폰 번호를 입력하세요" class="phone"><br>
+      </div>
+      <div class="input-section">
+        <span>E-mail</span><br>
+        <input type="text" placeholder="이메일 주소를 입력하세요" class="email"><br>
+      </div>
+      <div class="btn add-function">Add!</div>
+    </section>
+
+    <div class="profile-detail-container">
+      <!-- 디테일 페이지 -->
+    </div>
+
+    <section class="edit-profile-container">
+      <!-- detail의 edit버튼 눌렀을 때 --> 
+      <div class="edit-profile">
+        <div class="btn exit">x</div>
+        <div class="edit-photo">
+          <div class="photo-view"></div>
+          <div class="btn photo-upload">Upload</div>
+        </div>
+        <div class="input-section">
+          <span>Name</span><br>
+          <input type="text" placeholder="수정할 이름을 입력해주세요" class="name"><br>
+        </div>
+        <div class="input-section">
+          <span>Phone</span><br>
+          <input type="text" placeholder="수정할 휴대폰 번호를 입력해주세요" class="phone"><br>
+        </div>
+        <div class="input-section">
+          <span>E-mail</span><br>
+          <input type="text" placeholder="수정할 이메일 주소를 입력해주세요" class="email"><br>
+        </div>
+        <div class="btn edit-function">Edit!</div>
+      </div>     
+    </section>
+
+    <section class="add-edit-overlay"></section>
+    <section class="detail-overlay"></section>
+
+
+  </main>
+</body>
+</html>

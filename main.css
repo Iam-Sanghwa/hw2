@@ -1,0 +1,402 @@
+html{
+  font-size: 16px;
+  --color-black: #0E111B;
+  --color-white: #FFF;
+  --color-white-50: rgba(255,255,255,.5);
+  --color-white-30: rgba(255,255,255,.3);
+  --color-white-20: rgba(255,255,255,.2);
+  --color-white-10: rgba(255,255,255,.1);
+  --color-white-5: rgba(255,255,255,.05);
+  --color-primary: #FDC000;
+  --color-hover: #F86A05;
+  --color-area: #1C212E;
+
+  margin: 0 auto;
+}
+
+@media only screen and (max-width: 600px) {
+  header {
+    flex-direction: column;
+    padding: 1em;
+  }
+  header .search-section input {
+    width: 100%;
+  }
+}
+
+@media only screen and (min-width: 601px) and (max-width: 1024px) {
+  main {
+    padding: 2em 0;
+  }
+  .profile-list .profile-info-bar {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media only screen and (min-width: 1025px) {
+  header .search-section input {
+    width: 600px;
+  }
+}
+
+.loader-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.9); /* 투명도 조절 가능한 배경색 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999; /* 다른 요소 위에 표시되도록 z-index 설정 */
+}
+
+.loader-container .loader {
+  border: 16px solid #f3f3f3; /* 회전하는 원의 테두리 */
+  border-top: 16px solid #3498db; /* 회전하는 원의 상단 테두리 색 */
+  border-radius: 50%; /* 원의 모양을 동그랗게 만듦 */
+  width: 120px;
+  height: 120px;
+  animation: spin 0.8s linear infinite; /* 회전 애니메이션 설정 */
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); } /* 회전을 시작할 각도 */
+  100% { transform: rotate(360deg); } /* 회전을 종료할 각도 */
+}
+
+.add-edit-overlay {
+  display: none;
+  position: fixed;
+  z-index: 7;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--color-white-30);
+}
+.detail-overlay {
+  display: none;
+  position: fixed;
+  z-index:1;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--color-white-30);
+}
+
+.btn{
+  height: 50px;
+  padding: 0 20px;
+  border: none;
+  border-radius: 4px;
+  outline: none;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--color-white);
+  background-color: var(--color-area);
+  cursor: pointer;
+  transition: .3s;
+}
+.btn:hover{
+  background-color: var(--color-hover)
+}
+.btn-primary{
+  background-color: var(--color-primary);
+  color: var(--color-black)
+}
+.btn-primary:hover{
+  background-color: var(--color-hover);
+  color: var(--color-white);
+}
+
+body {
+  background-color: var(--color-black);
+  font-family: "Roboto", sans-serif;
+  line-height: 1.4;
+  color: var(--color-white);
+}
+header {
+  display: flex;
+  padding: 1em 2em;
+  box-sizing: border-box;
+  justify-content: space-evenly;
+}
+header .search-section{
+  display: flex;
+  justify-content: center;
+}
+header .search-section input{
+  width: 600px;
+  border-radius: 1em;
+  box-sizing: border-box;
+}
+header .search-section input::placeholder{
+  text-align: center;
+}
+header .search-section .search-btn{
+  display: flex;
+  align-items: center;
+}
+header .add-character{
+  display: flex;
+  align-items: center;
+}
+
+main {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 3em 0;
+  height: 30000px;
+}
+.profile-list .profile-info-bar{
+  display: grid;
+  grid-template-columns: repeat(5,1fr);
+  text-align: center;
+  color: var(--color-hover)
+}
+.profile-list .profile-container .profile{
+  margin : 1em 0 1em 0;
+  display: grid;
+  grid-template-columns: repeat(5,1fr);
+  grid-template-rows: repeat(1, 10em);
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-white-5);
+}
+.profile-list .profile-container .profile:hover{
+  background-color: var(--color-hover);
+}
+
+.profile-list .profile-container img{
+  display: flex;
+  margin: 0 auto;
+  width: 9em;
+  height: 10em;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.profile-list .profile-container .profile .btn-box{
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  width: 50%;
+  margin: 0 auto;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+}
+.profile-list .profile-container .profile .btn-box .btn.detail-btn{
+  display: flex;
+  width: 50%;
+  margin: 0 auto;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+}
+.profile-list .profile-container .profile .btn-box .btn.delete-btn{
+  display: flex;
+  width: 50%;
+  margin: 0 auto;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+}
+
+.add-profile{
+  display: none;
+  position: absolute;
+  width: 30em;
+  height: 40em;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  background-color: var(--color-black);
+  border-radius: 1em;
+}
+.add-profile .btn.exit{
+  display:flex;
+  padding: 0;
+  margin-left:auto;
+  margin-right:.5em;
+  width: 3em;
+  height: 3em;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-black);
+}
+.add-profile .edit-photo{
+  width: 10em;
+  height: 15em;
+  margin: 0 auto;
+}
+.add-profile .edit-photo .photo-view{
+  width: 10em;
+  height: 10em;
+  background-color: yellow;
+  margin: 1em auto;
+  border-radius: 50%;
+}
+.add-profile .edit-photo .photo-upload{
+  display:flex;
+  align-items: center;
+  justify-content: center;
+}
+.add-profile .input-section{
+  margin: 2em auto 2em auto;
+  width: 80%;
+}
+.add-profile .input-section input{
+  width:100%;
+  border-radius: .5em;
+}
+.add-profile .btn.add-function{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 10em;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.profile-detail{
+  margin: 2em auto;
+  width: 80%;
+  z-index: 5;
+}
+
+.add-profile{
+  display: none;
+  position: absolute;
+  width: 30em;
+  height: 40em;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  background-color: var(--color-black);
+  border-radius: 1em;
+}
+
+.profile-detail-container{
+  position: absolute;
+  margin: 2em auto;
+  width: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: var(--color-black);
+  border-radius: 1em;
+  z-index: 5;
+}
+.profile-detail-container .btn.detail-close{
+  display: flex;
+  padding: 0;
+  width: 3em;
+  height: 3em;
+  align-items:center;
+  justify-content: center;
+  margin-left: auto;
+  margin-right: 1em;
+  margin-bottom: .5em;
+  margin-top: 1em;
+}
+.profile-detail-container .btn.edit-character{
+  display: flex;
+  width: 5em;
+  margin-right: 1em;
+  margin-left: auto;
+  align-items: center;
+  justify-content: center;
+}
+.profile-detail-container .profile-detail-content{
+  display: flex;
+  gap: 3em;
+}
+.profile-detail-container .profile-detail-content .detail-photo{
+  display: flex;
+  width: 15em;
+  height: 20em;
+  align-items: center;
+  justify-content: center;
+}
+.profile-detail-container .profile-detail-content .detail-info{
+  display: flex;
+  gap: 2em;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.edit-profile-container{
+  display: none;
+  position: absolute;
+  width: 30em;
+  height: 40em;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: var(--color-black);
+  z-index: 10;
+  
+  border-radius: 1em;
+}
+.edit-profile-container .edit-profile{
+  
+  width: 30em;
+  height: 40em;
+  z-index: 10;
+  background-color: var(--color-black);
+  border-radius: 1em;
+}
+.edit-profile-container .edit-profile .btn.exit{
+  display:flex;
+  padding: 0;
+  margin-left:auto;
+  margin-right:.5em;
+  width: 3em;
+  height: 3em;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-black);
+  z-index: 20px;
+}
+.edit-profile-container .edit-profile .edit-photo{
+  width: 10em;
+  height: 15em;
+  margin: 0 auto;
+  z-index: 20px;
+}
+.edit-profile-container .edit-profile .edit-photo .photo-view{
+  width: 10em;
+  height: 10em;
+  background-color: yellow;
+  margin: 1em auto;
+  border-radius: 50%;
+}
+.edit-profile-container .edit-profile .edit-photo .photo-upload{
+  display:flex;
+  align-items: center;
+  justify-content: center;
+}
+.edit-profile-container .edit-profile .input-section{
+  margin: 2em auto 2em auto;
+  width: 80%;
+}
+.edit-profile-container .edit-profile .input-section input{
+  width:100%;
+  border-radius: .5em;
+}
+.edit-profile-container .edit-profile .btn.edit-function{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 10em;
+  margin: 0 auto;
+  box-sizing: border-box;
+}

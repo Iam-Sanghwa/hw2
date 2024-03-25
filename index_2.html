@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>사람 프로필 조회</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>사람 프로필 조회</h1>
+        <div id="searchBar">
+            <input type="text" id="searchInput" placeholder="이름을 입력하세요">
+            <button id="searchButton">검색</button>
+            <button id="addButton">Add</button>
+        </div>
+    </header>
+
+    <main id="mainContent">
+        <!-- 여기에 프로필 테이블이 들어갈 것입니다. -->
+    </main>
+
+    <!-- Add 프로필 창 -->
+    <div id="addProfileModal" class="modal">
+      <div class="modal-content">
+          <span class="close">&times;</span>
+          <h2>프로필 추가</h2>
+          <input type="text" id="profileName" placeholder="이름" required><br>
+          <input type="text" id="profileGender" placeholder="성별"><br>
+          <input type="text" id="profilePhone" placeholder="전화번호"><br>
+          <input type="text" id="profileEmail" placeholder="이메일 주소"><br>
+          <input type="file" id="profileImage" accept="image/*"> <!-- 파일 업로드 입력 추가 -->
+          <button id="addProfileButton">Add</button>
+      </div>
+    </div>
+
+    <script>
+        // Add 프로필 창 관련
+        const addProfileModal = document.getElementById('addProfileModal');
+        const addButton = document.getElementById('addButton');
+        const addProfileButton = document.getElementById('addProfileButton');
+        const closeAddProfileButton = document.querySelector('#addProfileModal .close');
+
+        addButton.addEventListener('click', function() {
+            addProfileModal.style.display = 'block';
+        });
+
+        closeAddProfileButton.addEventListener('click', function() {
+            addProfileModal.style.display = 'none';
+        });
+
+        addProfileButton.addEventListener('click', function() {
+          const name = document.getElementById('profileName').value || 'profile-picture';
+          const gender = document.getElementById('profileGender').value || 'name';
+          const phone = document.getElementById('profilePhone').value || 'gender';
+          const email = document.getElementById('profileEmail').value || 'phone';
+          const image = document.getElementById('profileImage').files[0]; // 선택된 이미지 가져오기
+      
+          const reader = new FileReader(); // 파일을 읽기 위한 FileReader 객체 생성
+          reader.onload = function(event) {
+              const imageData = event.target.result; // 이미지 데이터
+              const profileData = {
+                  name: name,
+                  gender: gender,
+                  phone: phone,
+                  email: email,
+                  image: imageData // 프로필 데이터에 이미지 데이터 추가
+              };
+      
+              // 로컬 스토리지에 저장
+              let profiles = JSON.parse(localStorage.getItem('profiles')) || [];
+              profiles.push(profileData);
+              localStorage.setItem('profiles', JSON.stringify(profiles));
+      
+              addProfileModal.style.display = 'none';
+              loadProfiles();
+          };
+      
+          // 선택된 파일을 읽어서 base64 형태로 가져오기
+          reader.readAsDataURL(image);
+      });
+      
+
+        // 프로필 불러오기
+        function loadProfiles() {
+            const mainContent = document.getElementById('mainContent');
+            mainContent.innerHTML = '';
+
+            let profiles = JSON.parse(localStorage.getItem('profiles')) || [];
+
+            profiles.forEach(function(profile, index) {
+                const profileElement = document.createElement('div');
+                profileElement.classList.add('profile');
+                profileElement.innerHTML = `
+                    <img src="profile-picture.jpg" alt="프로필 이미지">
+                    <h3>${profile.name}</h3>
+                    <p>성별: ${profile.gender}</p>
+                    <p>전화번호: ${profile.phone}</p>
+                    <p>이메일 주소: ${profile.email}</p>
+                `;
+
+                // 클릭 이벤트 추가
+                profileElement.addEventListener('click', function() {
+                    // 클릭한 프로필의 정보를 다음 페이지로 전달하고 페이지 이동
+                    const profileData = JSON.stringify(profile);
+                    sessionStorage.setItem('selectedProfile', profileData);
+                    window.location.href = 'profile.html';
+                });
+
+                mainContent.appendChild(profileElement);
+            });
+        }
+
+        // 검색 버튼 클릭 시
+        document.getElementById('searchButton').addEventListener('click', function() {
+            const searchInput = document.getElementById('searchInput').value.toLowerCase();
+            const profiles = JSON.parse(localStorage.getItem('profiles')) || [];
+
+            const filteredProfiles = profiles.filter(profile => {
+                return profile.name.toLowerCase().includes(searchInput);
+            });
+
+            const mainContent = document.getElementById('mainContent');
+            mainContent.innerHTML = '';
+
+            filteredProfiles.forEach(profile => {
+                const profileElement = document.createElement('div');
+                profileElement.classList.add('profile');
+                profileElement.innerHTML = `
+                    <img src="profile-picture.jpg" alt="프로필 이미지">
+                    <h3>${profile.name}</h3>
+                    <p>성별: ${profile.gender}</p>
+                    <p>전화번호: ${profile.phone}</p>
+                    <p>이메일 주소: ${profile.email}</p>
+                `;
+
+                mainContent.appendChild(profileElement);
+            });
+        });
+
+        // 페이지 로드 시 프로필 불러오기
+        document.addEventListener('DOMContentLoaded', function() {
+            loadProfiles();
+        });
+    </script>
+</body>
+</html>
